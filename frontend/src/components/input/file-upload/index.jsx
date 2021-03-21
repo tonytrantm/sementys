@@ -5,6 +5,7 @@ import {
   Grid,
   makeStyles,
 } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AuthContext } from '../../../common/auth-provider';
@@ -16,6 +17,7 @@ const useStyle = makeStyles({
     borderRadius: '50%',
     overflow: 'hidden',
     position: 'relative',
+    backgroundColor: grey[200],
   },
   image: {
     position: 'absolute',
@@ -46,6 +48,7 @@ export default function FileUpload({ item, defaultValue }) {
     })
       .then((result) => {
         const profilePicture = result.data?.profile_picture;
+        console.log(item.key, profilePicture);
         setUploadedFile(profilePicture);
         setUser(() => ({
           ...user,
@@ -59,11 +62,13 @@ export default function FileUpload({ item, defaultValue }) {
     <Grid container justify="center">
       <Grid container justify="center">
         <Box className={imageWrap}>
-          <img
-            src={`${process.env.REACT_APP_API_URL}/${uploadedFile}`}
-            alt="profile"
-            className={image}
-          />
+          {uploadedFile && (
+            <img
+              src={`${process.env.REACT_APP_API_URL}/${uploadedFile}`}
+              alt="profile"
+              className={image}
+            />
+          )}
         </Box>
       </Grid>
       <Grid container justify="center">
@@ -95,9 +100,12 @@ export default function FileUpload({ item, defaultValue }) {
 
 FileUpload.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
-  defaultValue: PropTypes.bool,
+  defaultValue: PropTypes.string,
 };
 FileUpload.defaultProps = {
-  item: { label: '' },
-  defaultValue: false,
+  item: {
+    label: '',
+    options: [],
+  },
+  defaultValue: '',
 };

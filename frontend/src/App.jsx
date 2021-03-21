@@ -6,7 +6,7 @@ import ProfilePage from './pages/profile';
 import { AuthProvider } from './common/auth-provider';
 import LoginPage from './pages/login';
 import PrivateRoute from './common/private-route';
-import UnPrivateRoute from './common/unprivate-route';
+import GuestRoute from './common/guest-route';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Router>
         <PrivateRoute path="/" exact component={Dashboard} />
         <PrivateRoute path="/settings" component={ProfilePage} />
-        <UnPrivateRoute path="/login" component={LoginPage} />
+        <GuestRoute path="/login" component={LoginPage} />
       </Router>
     </AuthProvider>
   );

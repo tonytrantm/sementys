@@ -7,6 +7,7 @@ import { Countries } from '../../constants';
 import { profileValidationSchema } from '../../config/profile';
 import { getInputType } from '../../common/get-input-type';
 import { AuthContext } from '../../common/auth-provider';
+import { validInput } from '../../lib/valid-input';
 
 const formList = [
   { key: 'profile_picture', label: 'Profile Picture', type: 'file-upload' },
@@ -32,7 +33,9 @@ export default function Profile() {
   const handleSave = (data, setSubmitting) => {
     setSubmitting(true);
 
-    axios.put(`/user/${user.id}`, data)
+    const newData = data;
+    delete newData.profile_picture;
+    axios.put(`/user/${user.id}`, newData)
       .then((result) => setUser(result.data))
       .catch((err) => setErrorMassage(err.response?.data?.message));
 
@@ -49,7 +52,7 @@ export default function Profile() {
       <Formik
         validateOnChange="true"
         validationSchema={profileValidationSchema}
-        initialValues={user}
+        initialValues={validInput(user)}
         setFieldValue
         onSubmit={(data, { setSubmitting }) => handleSave(data, setSubmitting)}
       >

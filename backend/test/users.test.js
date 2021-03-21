@@ -97,19 +97,7 @@ describe('module list user', () => {
     this.queryStub = stub(db, 'query').resolves({
       rowCount: 0,
       rows: [],
-    }); // remplace la fonction "query" de "../sql/db"
-  });
-
-  it('should throw an error if user does not exist', async function() {
-    try {
-      await user.listUser();
-    } catch (err) {
-      console.log(err);
-      expect(err.message).to.equal('User does not exist');
-      expect(this.queryStub.callCount).to.equal(1);
-      return;
-    }
-    throw new Error('Should have thrown an error');
+    });
   });
 
   it('should succeed', async function () {
