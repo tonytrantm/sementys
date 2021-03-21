@@ -47,3 +47,4 @@ frontend/yarn.lock
 
 # server uploads
 backend/uploads/*
+!backend/uploads/
