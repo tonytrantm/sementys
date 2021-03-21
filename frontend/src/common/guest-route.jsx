@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from './auth-provider';
 
-const UnPrivateRoute = ({ component: Component, ...rest }) => {
+const GuestRoute = ({ component: Component, ...rest }) => {
   const { user } = useContext(AuthContext);
   return (
     <Route
@@ -18,11 +18,11 @@ const UnPrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default UnPrivateRoute;
+export default GuestRoute;
 
-UnPrivateRoute.propTypes = {
+GuestRoute.propTypes = {
   component: PropTypes.objectOf(PropTypes.any),
 };
-UnPrivateRoute.defaultProps = {
+GuestRoute.defaultProps = {
   component: null,
 };
