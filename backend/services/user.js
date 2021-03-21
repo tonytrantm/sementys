@@ -109,7 +109,7 @@ const updateUser = async (user_id, input) => {
     country: yup.string().nullable(),
     city: yup.string().nullable(),
     email: yup.string().email().required(),
-    phone: yup.string().matches(phoneRegExp, "Phone number is not valid").nullable(),
+    phone: yup.string().nullable(),
     email_alert: yup.boolean().nullable(),
     sms_alert: yup.boolean().nullable(),
   });

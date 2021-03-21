@@ -7,6 +7,7 @@ import { Countries } from '../../constants';
 import { profileValidationSchema } from '../../config/profile';
 import { getInputType } from '../../common/get-input-type';
 import { AuthContext } from '../../common/auth-provider';
+import { validInput } from '../../lib/valid-input';
 
 const formList = [
   { key: 'profile_picture', label: 'Profile Picture', type: 'file-upload' },
@@ -49,7 +50,7 @@ export default function Profile() {
       <Formik
         validateOnChange="true"
         validationSchema={profileValidationSchema}
-        initialValues={user}
+        initialValues={validInput(user)}
         setFieldValue
         onSubmit={(data, { setSubmitting }) => handleSave(data, setSubmitting)}
       >
@@ -85,6 +86,7 @@ export default function Profile() {
                 </Button>
               </Box>
             </Grid>
+            <pre>{JSON.stringify(values, null, 2)}</pre>
           </Form>
         )}
       </Formik>

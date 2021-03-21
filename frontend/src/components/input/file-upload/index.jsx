@@ -27,7 +27,7 @@ const useStyle = makeStyles({
   },
 });
 
-export default function FileUpload({ item, defaultValue }) {
+export default function FileUpload({ item, defaultValue, setFieldValue }) {
   const { user, setUser } = useContext(AuthContext);
   const [uploadedFile, setUploadedFile] = useState('');
   const { image, imageWrap, inputFile } = useStyle();
@@ -46,11 +46,13 @@ export default function FileUpload({ item, defaultValue }) {
     })
       .then((result) => {
         const profilePicture = result.data?.profile_picture;
+        console.log(item.key, profilePicture);
         setUploadedFile(profilePicture);
         setUser(() => ({
           ...user,
           profile_picture: profilePicture,
         }));
+        setFieldValue(item.key, profilePicture);
       })
       .catch((err) => console.log(err));
   };
@@ -95,9 +97,14 @@ export default function FileUpload({ item, defaultValue }) {
 
 FileUpload.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
-  defaultValue: PropTypes.bool,
+  defaultValue: PropTypes.string,
+  setFieldValue: PropTypes.func,
 };
 FileUpload.defaultProps = {
-  item: { label: '' },
-  defaultValue: false,
+  item: {
+    label: '',
+    options: [],
+  },
+  defaultValue: '',
+  setFieldValue: () => {},
 };
