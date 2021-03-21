@@ -22,6 +22,7 @@ export default function LoginForm() {
         const { user, token } = result.data;
         localStorage.setItem('token', token);
         setUser(user);
+        window.location = '/';
       })
       .catch((err) => setErrorMassage(err.response?.data?.message));
   };

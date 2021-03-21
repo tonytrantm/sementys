@@ -21,7 +21,7 @@ const GuestRoute = ({ component: Component, ...rest }) => {
 export default GuestRoute;
 
 GuestRoute.propTypes = {
-  component: PropTypes.objectOf(PropTypes.any),
+  component: PropTypes.func,
 };
 GuestRoute.defaultProps = {
   component: null,

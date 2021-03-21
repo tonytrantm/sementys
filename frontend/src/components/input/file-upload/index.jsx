@@ -5,6 +5,7 @@ import {
   Grid,
   makeStyles,
 } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { AuthContext } from '../../../common/auth-provider';
@@ -16,6 +17,7 @@ const useStyle = makeStyles({
     borderRadius: '50%',
     overflow: 'hidden',
     position: 'relative',
+    backgroundColor: grey[200],
   },
   image: {
     position: 'absolute',
@@ -27,7 +29,7 @@ const useStyle = makeStyles({
   },
 });
 
-export default function FileUpload({ item, defaultValue, setFieldValue }) {
+export default function FileUpload({ item, defaultValue }) {
   const { user, setUser } = useContext(AuthContext);
   const [uploadedFile, setUploadedFile] = useState('');
   const { image, imageWrap, inputFile } = useStyle();
@@ -52,7 +54,6 @@ export default function FileUpload({ item, defaultValue, setFieldValue }) {
           ...user,
           profile_picture: profilePicture,
         }));
-        setFieldValue(item.key, profilePicture);
       })
       .catch((err) => console.log(err));
   };
@@ -61,11 +62,13 @@ export default function FileUpload({ item, defaultValue, setFieldValue }) {
     <Grid container justify="center">
       <Grid container justify="center">
         <Box className={imageWrap}>
-          <img
-            src={`${process.env.REACT_APP_API_URL}/${uploadedFile}`}
-            alt="profile"
-            className={image}
-          />
+          {uploadedFile && (
+            <img
+              src={`${process.env.REACT_APP_API_URL}/${uploadedFile}`}
+              alt="profile"
+              className={image}
+            />
+          )}
         </Box>
       </Grid>
       <Grid container justify="center">
@@ -98,7 +101,6 @@ export default function FileUpload({ item, defaultValue, setFieldValue }) {
 FileUpload.propTypes = {
   item: PropTypes.objectOf(PropTypes.any),
   defaultValue: PropTypes.string,
-  setFieldValue: PropTypes.func,
 };
 FileUpload.defaultProps = {
   item: {
@@ -106,5 +108,4 @@ FileUpload.defaultProps = {
     options: [],
   },
   defaultValue: '',
-  setFieldValue: () => {},
 };
