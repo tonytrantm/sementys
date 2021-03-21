@@ -44,3 +44,6 @@ node_modules/
 .env
 .env.test
 frontend/yarn.lock
+
+# server uploads
+backend/uploads/*

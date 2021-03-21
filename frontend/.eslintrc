@@ -1,6 +1,7 @@
 {
   "extends": "airbnb",
   "rules": {
+		"import/prefer-default-export": "off",
     "consistent-return": [1],
     "strict": [0],
     "max-len": ["warn", 200],

@@ -1,10 +1,12 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
+const cookieParse = require('cookie-parser');
 const morganMiddleware = require('./middelware/logger');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+const UserRouter = require('./routes/user');
 
-const port = 3002;
+const port = process.env.PORT || 3002;
 
 const app = express();
 
@@ -21,10 +23,14 @@ app.use(
     extended: true,
   }),
 );
+app.use(cookieParse());
 app.use(morganMiddleware);
-app.get('/health', (req, res) => res.send({ message: 'ok' }));
+app.use('/user', UserRouter);
+
+app.use(express.static('uploads'));
 
 const server = app.listen(port, () => {
   console.log(`THM App running on port ${port}.`);
 });
+
 module.exports = server;
